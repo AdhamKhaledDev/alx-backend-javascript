@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Script name: lint_fix
+
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 filename"
+  exit 1
+fi
+
+filename="$1"
+
+npm run lint -- --fix "$filename"
