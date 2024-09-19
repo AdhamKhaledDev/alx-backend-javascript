@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Step 1: Run lint
+read -p "Enter the filename to lint: " filename
+npm run lint -- --fix "$filename"
+
+# Step 2: Git add
+read -p "Enter the files to add (separated by commas): " files_to_add
+IFS=',' read -ra file_array <<< "$files_to_add"
+for file in "${file_array[@]}"; do
+    git add "$(echo "$file" | xargs)"
+done
+
+# Step 3: Git commit
+read -p "Enter the commit message: " commit_message
+git commit -m "$commit_message"
+
+# Step 4: Git push
+read -p "Do you want to push? (y/n): " push_confirm
+if [[ $push_confirm == "y" ]]; then
+    git push
+else
+    echo "Push skipped."
+fi
